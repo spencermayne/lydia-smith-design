@@ -23,7 +23,7 @@ export default function Gallery() {
 
   return (
     <section id="portfolio" className="px-8 py-8">
-      <div className="columns-2 md:columns-3 gap-4 space-y-4">
+      <div className="columns-1 sm:columns-2 md:columns-3 gap-4 space-y-4">
         {artworks.map((artwork, index) => (
           <button
             key={index}
