@@ -16,8 +16,8 @@ const dmSerifDisplay = DM_Serif_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Lydia Smith — Illustration",
-  description: "Portfolio of Lydia Smith, illustrator.",
+  title: "Lydia Smith Design",
+  description: "Portfolio of Lydia Smith, UK based artist.",
 };
 
 export default function RootLayout({
@@ -27,7 +27,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${dmSans.variable} ${dmSerifDisplay.variable} font-sans antialiased`}>
+      <body
+        className={`${dmSans.variable} ${dmSerifDisplay.variable} font-sans antialiased`}>
         {children}
       </body>
     </html>
