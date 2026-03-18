@@ -1,14 +1,17 @@
 "use client";
 
 import { artworks } from "@/data/artworks";
-import dynamic from "next/dynamic";
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
-
-const Lightbox = dynamic(() => import("yet-another-react-lightbox"), {
-  ssr: false,
-});
-
+import {
+  isImageFitCover,
+  isImageSlide,
+  Lightbox,
+  RenderSlideProps,
+  Slide,
+  useLightboxProps,
+  useLightboxState,
+} from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 
 const slides = artworks.map((a) => ({
@@ -17,6 +20,62 @@ const slides = artworks.map((a) => ({
   height: a.height,
   alt: a.title,
 }));
+
+function isNextJsImage(slide: Slide): slide is StaticImageData {
+  return (
+    isImageSlide(slide) &&
+    typeof slide.width === "number" &&
+    typeof slide.height === "number"
+  );
+}
+
+function RenderSlide({ slide, offset, rect }: RenderSlideProps) {
+  const {
+    on: { click },
+    carousel: { imageFit },
+  } = useLightboxProps();
+
+  const { currentIndex } = useLightboxState();
+
+  const cover = isImageSlide(slide) && isImageFitCover(slide, imageFit);
+
+  if (!isNextJsImage(slide)) {
+    return undefined;
+  }
+
+  const width = !cover
+    ? Math.round(
+        Math.min(rect.width, (rect.height / slide.height) * slide.width)
+      )
+    : rect.width;
+
+  const height = !cover
+    ? Math.round(
+        Math.min(rect.height, (rect.width / slide.width) * slide.height)
+      )
+    : rect.height;
+
+  return (
+    <div style={{ position: "relative", width, height }}>
+      <Image
+        fill
+        alt=""
+        src={slide}
+        loading="eager"
+        draggable={false}
+        placeholder={slide.blurDataURL ? "blur" : undefined}
+        style={{
+          objectFit: cover ? "cover" : "contain",
+          cursor: click ? "pointer" : undefined,
+        }}
+        sizes={`${Math.ceil((width / window.innerWidth) * 100)}vw`}
+        onClick={
+          offset === 0 ? () => click?.({ index: currentIndex }) : undefined
+        }
+      />
+    </div>
+  );
+}
 
 export default function Gallery() {
   const [lightboxIndex, setLightboxIndex] = useState(-1);
@@ -53,6 +112,7 @@ export default function Gallery() {
         index={lightboxIndex}
         close={() => setLightboxIndex(-1)}
         slides={slides}
+        render={{ slide: RenderSlide }}
       />
     </section>
   );
