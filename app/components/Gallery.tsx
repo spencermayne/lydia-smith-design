@@ -60,8 +60,7 @@ function RenderSlide({ slide, offset, rect }: RenderSlideProps) {
       <Image
         fill
         alt=""
-        src={slide}
-        loading="eager"
+        src={slide.src}
         draggable={false}
         placeholder={slide.blurDataURL ? "blur" : undefined}
         style={{
@@ -93,6 +92,7 @@ export default function Gallery() {
               alt={artwork.title}
               width={artwork.width}
               height={artwork.height}
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
               className="w-full h-auto block transition-transform duration-500 ease-out group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-300 ease-out flex items-end">
