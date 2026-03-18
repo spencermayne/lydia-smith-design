@@ -10,7 +10,7 @@ export default function Header() {
           width={256}
           height={256}
           className="object-cover w-full h-full"
-          priority
+          preload
         />
       </div>
       <nav className="flex items-center gap-8">
