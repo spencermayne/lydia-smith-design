@@ -93,6 +93,7 @@ export default function Gallery() {
               width={artwork.width}
               height={artwork.height}
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
+              preload={index < 3}
               className="w-full h-auto block transition-transform duration-500 ease-out group-hover:scale-105"
             />
             <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/40 transition-colors duration-300 ease-out flex items-end">
