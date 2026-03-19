@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       new URL("https://114ar3p2syk6wmma.public.blob.vercel-storage.com/**"),
     ],
-    qualities: [50],
+    qualities: [50, 75],
   },
 };
 
