@@ -67,6 +67,7 @@ function RenderSlide({ slide, offset, rect }: RenderSlideProps) {
           objectFit: cover ? "cover" : "contain",
           cursor: click ? "pointer" : undefined,
         }}
+        quality={50}
         sizes={`${Math.ceil((width / window.innerWidth) * 100)}vw`}
         onClick={
           offset === 0 ? () => click?.({ index: currentIndex }) : undefined
@@ -92,6 +93,7 @@ export default function Gallery() {
               alt={artwork.title}
               width={artwork.width}
               height={artwork.height}
+              quality={50}
               sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 33vw"
               preload={index < 3}
               className="w-full h-auto block transition-transform duration-500 ease-out group-hover:scale-105"
